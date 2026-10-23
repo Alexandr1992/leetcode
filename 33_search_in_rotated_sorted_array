@@ -1,0 +1,44 @@
+class Solution {
+    fun search(nums: IntArray, target: Int): Int {
+        
+        var leftIndex = 0
+        var rightIndex = nums.size - 1
+
+        while (leftIndex <= rightIndex){
+            val midIndex = leftIndex + (rightIndex - leftIndex) / 2
+
+            if (nums[midIndex] == target){
+                return midIndex
+            }
+
+            //Check left half is sorted and find target
+            if (nums[leftIndex] <= nums[midIndex]){
+                //Left half is sorted
+
+                //Check target is in left half
+                if (target >= nums[leftIndex] && target <= nums[midIndex]){
+                    //Continue search in left half if target is in left half and it is sorted
+                    rightIndex = midIndex - 1
+                } else {
+                    //Continue search in right half if target here
+                    leftIndex = midIndex + 1
+                }
+            } else {
+                //Right half is sorted, so check where need to move next
+
+                //Check target is in right half
+                if (target >= nums[midIndex] && target <= nums[rightIndex]){
+                    //So right half is sorted and target here, continue seach in right half
+                    leftIndex = midIndex + 1
+                } else {
+                    //Target is in unsorted left half so continue search in left half
+                    rightIndex = midIndex - 1
+                }
+
+            }
+
+        }
+
+        return -1
+    }
+}
